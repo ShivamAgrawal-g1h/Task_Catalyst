@@ -2,117 +2,60 @@
 
 All notable changes to **Task Catalyst** are documented in this file.
 
-The project follows an evolutionary development approach where each major version introduces a significant architectural or functional improvement.
-
 ---
 
 # Version 3
 
-> **Release Type:** Major AI & Architecture Enhancement
+> **Release Type:** Major Feature Update
 
-Version 3 transforms Task Catalyst from an AI-assisted productivity application into a **context-aware productivity assistant** capable of reasoning about a user's actual workload before generating recommendations.
-
----
-
-# Highlights
-
-### 🧠 Context-Aware AI Coaching
-
-The AI coach now understands the user's real productivity situation instead of producing generic responses.
-
-Gemini now receives:
-
-* Pending tasks
-* Overdue tasks
-* Tasks due within 72 hours
-* Priority scores
-* Estimated completion time
-* Postponement history
-* Recent conversation history
-
-This enables responses tailored to the user's current workload.
-
----
-
-### 🎯 Intelligent Productivity Reasoning
-
-The AI assistant can now:
-
-* Detect productivity risks
-* Reference actual task titles
-* Explain why a recommendation is important
-* Prioritize competing tasks
-* Recommend concrete next actions
-* Consider urgency alongside priority score
-
-This represents a major improvement over the previous recommendation system.
-
----
-
-### 💬 Prompt Engineering Redesign
-
-Completely redesigned the Gemini system prompt.
-
-The assistant now behaves as a productivity guide instead of a traditional chatbot.
-
-The prompt encourages the model to:
-
-* Analyze task context
-* Explain decisions
-* Detect hidden risks
-* Avoid generic advice
-* Produce concise actionable responses
+Version 3 introduces the first **Agentic AI layer** to Task Catalyst, enabling the application to analyze task data, generate proactive interventions, and assist users through executable AI actions.
 
 ---
 
 ## Added
 
-### AI Context Pipeline
+### Agentic AI Engine
 
-Added preprocessing before every AI request.
+Introduced a dedicated reasoning layer responsible for analyzing the current task state and generating structured productivity interventions.
 
-The application now automatically prepares:
+The engine evaluates:
 
-* Productivity summary
-* Overdue task list
+* Pending tasks
+* Overdue tasks
 * Upcoming deadlines
-* Ranked pending tasks
-* Conversation history
+* Priority scores
 * Estimated workload
-
-before sending requests to Gemini.
-
----
-
-### Situation Summary
-
-Introduced an internal productivity summary containing:
-
-* Overdue task count
-* Tasks due within 72 hours
-* Frequently postponed tasks
-
-This allows Gemini to immediately understand the user's workload.
+* Postponement history
 
 ---
 
-### Conversation Memory
+### Agent Briefing
 
-The AI coach now includes recent conversation history when generating replies.
+Added a new Dashboard section that presents AI-generated observations in the form of concise intervention cards.
 
-Benefits include:
+Each briefing contains:
 
-* Better continuity
-* Reduced repetition
-* More contextual responses
+* Observation
+* Reasoning
+* Optional executable action
 
 ---
 
-### Task Ranking
+### Executable AI Actions
 
-Pending tasks are now sorted using the existing Priority Score before being supplied to Gemini.
+Users can now execute supported AI suggestions directly from the interface.
 
-The AI therefore reasons using the application's own prioritization algorithm.
+Current supported actions include:
+
+* Split a large task into subtasks
+* Postpone a lower-priority task
+* Generate preparation tasks for important events
+
+---
+
+### AI Preparation Plans
+
+For high-priority events (assignments, interviews, presentations, exams, etc.), the agent can automatically generate a structured preparation plan and add it to the task list.
 
 ---
 
@@ -120,308 +63,109 @@ The AI therefore reasons using the application's own prioritization algorithm.
 
 ### AI Coach
 
-Previously:
+Upgraded from a conversational assistant to an interactive productivity assistant.
 
-* Answered user questions.
-* Provided productivity advice.
+The coach can now:
 
-Now:
-
-* Reasons about workload.
-* Detects risks.
-* Explains recommendations.
-* References real tasks.
-* Prioritizes actions.
-
----
-
-### Gemini Integration
-
-Refactored AI communication.
-
-Improvements include:
-
-* Better error handling
-* Cleaner response flow
-* Structured prompts
-* Better separation between UI and AI logic
+* Detect executable opportunities
+* Request user confirmation
+* Execute supported actions after approval
+* Continue conversations using recent chat history
 
 ---
 
 ### Dashboard
 
-Improved Dashboard interaction with:
+Enhanced the Dashboard by integrating:
 
-* Smarter quote updates
-* Better integration with quote engine
-* Improved AI response flow
-* Better synchronization after settings changes
+* Agent Briefing
+* Executable intervention cards
+* Smarter AI refresh behaviour
+* Better separation between task updates and AI updates
 
 ---
 
-### AI Recommendation Quality
+### AI Reasoning
 
-Recommendations are now generated using:
+Gemini prompts now include richer productivity context rather than relying only on user messages.
 
-* Deadlines
+Additional context includes:
+
+* Pending tasks
+* Overdue tasks
+* Deadline urgency
 * Priority scores
-* Estimated effort
-* Postponement history
-* Current workload
-
-instead of limited task information.
+* Task history
 
 ---
 
 ## Improved
 
-### User Experience
-
-* More relevant coaching
-* Less generic AI responses
-* Better motivational experience
-* Faster interaction flow
-
----
-
-### Maintainability
-
-Improved modularity by separating:
-
-* AI generation
-* Quote resolution
-* Dashboard presentation
-* Productivity reasoning
-
-This makes future expansion significantly easier.
-
----
-
-### Prompt Design
-
-The prompt now explicitly instructs Gemini to:
-
-* Avoid generic advice.
-* Explain reasoning.
-* Mention task names.
-* Detect hidden risks.
-* Recommend the highest-impact task.
+* Better separation between AI reasoning and UI components.
+* Reduced unnecessary AI executions during normal task updates.
+* Improved modularity by introducing a dedicated Agent Engine.
+* More actionable AI responses with task-specific recommendations.
+* Clearer interaction flow through explicit user confirmation before executing AI actions.
 
 ---
 
 ## Fixed
 
-* Improved AI fallback behavior.
-* Better handling of missing API keys.
-* More resilient Gemini error handling.
-* Reduced repetitive AI responses.
-* Improved recommendation consistency.
+* Improved synchronization between AI suggestions and Dashboard state.
+* Improved handling of task refreshes after AI actions.
+* Reduced repeated AI briefings during normal Dashboard updates.
+* Improved fallback handling for AI-generated actions.
 
 ---
 
-# Files Modified
+## Files Added
 
 ```text
-src/lib/
-    gemini.js
+src/components/
+    AgentBriefing.jsx
 
+src/lib/
+    agentEngine.js
+```
+
+---
+
+## Files Modified
+
+```text
 src/pages/
     Dashboard.jsx
+    AICoach.jsx
 ```
 
 ---
 
-# Files Added
-
-```text
-No new core files.
-
-Version 3 primarily enhances existing architecture and AI reasoning.
-```
-
----
-
-# Internal Architecture Changes
-
-## Previous Architecture (V2)
-
-```text
-Dashboard
-      │
-      ▼
-Quote Engine
-      │
-      ▼
-Gemini
-      │
-      ▼
-Response
-```
-
-The AI generated responses using relatively limited task information.
-
----
-
-## Current Architecture (V3)
-
-```text
-Tasks
-      │
-      ▼
-Context Builder
-      │
-      ▼
-Gemini Prompt
-      │
-      ▼
-AI Reasoning
-      │
-      ▼
-Personalized Recommendation
-      │
-      ▼
-Dashboard
-```
-
-The AI now reasons using structured productivity context before generating responses.
-
----
-
-# AI Pipeline Evolution
-
-## Version 2
-
-```text
-User Question
-
-↓
-
-Gemini
-
-↓
-
-Answer
-```
-
----
-
-## Version 3
-
-```text
-User Question
-
-↓
-
-Pending Tasks
-
-↓
-
-Priority Scores
-
-↓
-
-Deadlines
-
-↓
-
-Overdue Tasks
-
-↓
-
-Conversation History
-
-↓
-
-Situation Summary
-
-↓
-
-Gemini
-
-↓
-
-Context-Aware Recommendation
-```
-
-This significantly improves response quality while maintaining low latency.
-
----
-
-# Performance
-
-Improved AI efficiency through:
-
-* Structured prompt generation.
-* Limited conversation history.
-* Ranked task selection.
-* Reduced unnecessary prompt size.
-
----
-
-# Database
+## Database
 
 No schema changes.
 
-Existing database structure remains fully compatible.
-
-No migration required.
+No database migration required.
 
 ---
 
-# Breaking Changes
+## Breaking Changes
 
 None.
 
-Version 2 user data remains fully compatible.
-
-No manual migration required.
+Existing user data remains fully compatible.
 
 ---
 
-# Migration Notes
+## Summary
 
-Existing users automatically benefit from:
-
-* Smarter AI coaching
-* Better contextual reasoning
-* Improved productivity recommendations
-
-No configuration changes are required.
+Version 3 extends Task Catalyst beyond AI-assisted task management by introducing an **Agentic AI workflow**. The application can now analyze the user's workload, present meaningful interventions, and assist with productivity actions while keeping the user in control through explicit confirmation.
 
 ---
 
-# Statistics
+## Version Progression
 
-### Major AI Enhancements
-
-* Context-aware prompting
-* Intelligent workload analysis
-* Conversation memory
-* Risk detection
-* Priority-based reasoning
-
-### Files Modified
-
-* `src/lib/gemini.js`
-* `src/pages/Dashboard.jsx`
-
-### Database Changes
-
-* None
-
-### Primary Engineering Focus
-
-* AI Reasoning
-* Prompt Engineering
-* Context Awareness
-* Productivity Intelligence
-
----
-
-# Summary
-
-Version 3 represents the first major step toward an **agentic productivity assistant**.
-
-Instead of responding solely to user prompts, Task Catalyst now analyzes the surrounding productivity context—including deadlines, priorities, workload, and recent interactions—to produce recommendations that are more relevant, explainable, and actionable.
-
-This release establishes the architectural foundation for future versions focused on autonomous interventions, workflow orchestration, and advanced productivity intelligence.
+| Version | Primary Focus                           |
+| ------- | --------------------------------------- |
+| V1      | Core Productivity Platform              |
+| V2      | Personalized Motivation & Quote System  |
+| **V3**  | Agentic AI & Productivity Interventions |

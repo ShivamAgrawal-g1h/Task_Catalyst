@@ -1,62 +1,56 @@
 # 🚀 Task Catalyst
 
-> **An AI-Powered Productivity Companion that evolves from a task manager into an intelligent productivity assistant.**
+> **An Agentic AI Productivity Companion for Students**
 
-Task Catalyst is a modern productivity application built to help students plan work, manage deadlines, and receive contextual AI guidance based on their actual workload.
+Task Catalyst is an AI-powered productivity application that combines intelligent task management with Google's Gemini AI to help students organize work, reduce procrastination, and make better day-to-day decisions.
 
-Unlike traditional task managers that simply store tasks, Task Catalyst understands the user's productivity context and uses Google's Gemini AI to generate personalized recommendations, coaching, motivational content, and intelligent prioritization.
+Unlike conventional task managers that only store tasks, Task Catalyst continuously analyzes the user's workload, identifies productivity risks, and recommends concrete actions before problems become overwhelming.
 
 ---
 
 # 📌 Version
 
-**Current Version:** **V3**
+**Current Version :** **V3**
 
-Version 3 transforms Task Catalyst from an AI-assisted task manager into a **context-aware productivity assistant**, introducing a modular quote engine, richer AI reasoning, and a significantly smarter Dashboard experience.
+Version 3 marks the transition from an AI-assisted task manager to an **Agentic Productivity Assistant**, introducing proactive reasoning, intervention generation, and executable productivity actions.
 
 ---
 
 # 📖 Overview
 
-Task Catalyst was designed around one philosophy:
+Task Catalyst was built around one guiding principle:
 
-> **A productivity application should actively help users make better decisions—not simply record tasks.**
+> **Productivity software should actively help users make decisions instead of merely recording tasks.**
 
-The application combines modern web technologies with Artificial Intelligence to provide:
-
-* Secure cloud-based task management
-* Intelligent prioritization
-* Context-aware AI coaching
-* Personalized motivation
-* Productivity insights
-* Responsive user experience
+The application combines modern web technologies, cloud infrastructure, and Artificial Intelligence to create an intelligent workspace capable of understanding task context and providing meaningful assistance.
 
 ---
 
-# ✨ Key Features
+# ✨ Core Features
 
-## 🔐 Authentication
+## 🔐 Secure Authentication
 
 * Email & Password authentication
-* Secure user accounts via Supabase Auth
+* Supabase Authentication
 * Automatic profile creation
-* Protected user data using Row-Level Security (RLS)
+* Row-Level Security (RLS)
+* User-specific data isolation
 
 ---
 
 ## 📋 Intelligent Task Management
 
-Manage tasks using:
+Manage tasks with:
 
 * Title
 * Description
 * Deadline
 * Importance Rating
 * Estimated Time
-* Categories
-* Status
+* Category
+* Status Tracking
 * Priority Score
-* Postponement Tracking
+* Postponement Counter
 
 Supported operations:
 
@@ -72,158 +66,117 @@ Supported operations:
 
 ## 📊 Smart Dashboard
 
-The Dashboard serves as the central productivity workspace.
+The Dashboard serves as the productivity control center.
 
-It provides:
+It displays:
 
 * Personalized greeting
 * Daily motivational quote
 * Productivity statistics
-* Pending task overview
-* Overdue task monitoring
-* AI-generated recommendations
+* AI recommendations
+* Agent Briefing
 * Top priority tasks
+* Due today / tomorrow summaries
 * Quick task completion
-* Quote management interface
 
 ---
 
-# 🤖 Context-Aware AI Coach (New in V3)
+# 🤖 Agentic AI System (New in V3)
 
-Version 3 significantly upgrades the AI coaching system.
+Version 3 introduces Task Catalyst's first **Agentic AI layer**.
 
-Instead of generating generic responses, Gemini now reasons using the user's actual productivity context.
+Instead of simply answering questions, the application now observes the user's task state and generates structured interventions.
 
-The AI analyses:
+The Agent continuously evaluates:
 
 * Pending tasks
-* Overdue tasks
-* Tasks due within 72 hours
+* Overdue work
+* Deadline urgency
+* Estimated workload
 * Priority scores
-* Estimated completion time
-* Postponement history
-* Previous conversation context
+* Task postponement history
+* High-risk productivity patterns
 
-This enables the coach to recommend concrete actions rather than generic productivity advice.
-
----
-
-## 🧠 Intelligent Task Reasoning
-
-The AI assistant now:
-
-* Identifies urgent tasks
-* Detects productivity risks
-* References task titles directly
-* Explains why a recommendation is important
-* Suggests concrete next actions
-* Maintains short conversation history for contextual responses
-
-The goal is to make responses actionable rather than motivational alone.
+These observations are converted into actionable productivity briefings.
 
 ---
 
-# 🌟 Advanced Motivation System
+## ⚡ Agent Briefing
 
-Version 3 continues to build upon the customizable motivation engine introduced previously.
+A new Agent Briefing panel appears on the Dashboard whenever meaningful productivity observations are detected.
 
-The quote system now supports multiple sources while maintaining clean architectural separation between AI generation and quote selection.
+Possible interventions include:
+
+* Overdue task warnings
+* Deadline risk detection
+* Workload analysis
+* Preparation plans
+* Productivity insights
+* Actionable recommendations
+
+Each intervention explains:
+
+* What was detected
+* Why it matters
+* What action should be taken
 
 ---
 
-## Quote Sources
+## ✅ Executable AI Actions
 
-Motivational quotes can originate from:
+Unlike previous versions where AI only generated text, Version 3 allows the user to execute AI-generated actions directly from the interface.
+
+Supported actions include:
+
+* Split large tasks into smaller subtasks
+* Postpone lower-priority work
+* Automatically generate preparation tasks
+* Accept or dismiss AI recommendations
+
+This creates a more interactive productivity experience while keeping the user in full control.
+
+---
+
+# 🧠 AI Coach
+
+The AI Coach has been significantly upgraded.
+
+Rather than functioning as a general chatbot, it now:
+
+* Understands current workload
+* References actual task titles
+* Maintains short conversation history
+* Detects actionable opportunities
+* Requests confirmation before executing supported actions
+
+The result is a conversational assistant capable of reasoning about productivity instead of simply answering questions.
+
+---
+
+# 🌟 Personalized Motivation
+
+Task Catalyst includes a customizable motivation system supporting multiple quote sources.
+
+Quote sources include:
 
 * Gemini AI
 * Personal custom quotes
-* Built-in inspiration library
+* Built-in inspirational library
 
-Every displayed quote clearly identifies its source.
+Supported modes:
 
----
+* Mixed
+* AI Only
+* My Quotes
+* Pinned Quote
 
-## Four Quote Modes
-
-Users can choose how motivational content is selected.
-
-### Mixed
-
-Combines:
-
-* AI-generated quotes
-* Personal quotes
-* Built-in classics
+Every displayed quote clearly indicates its origin.
 
 ---
 
-### AI Only
+# 📈 Intelligent Priority Algorithm
 
-Uses Gemini whenever available.
-
-Gracefully falls back when AI is unavailable.
-
----
-
-### My Quotes
-
-Displays only user-created motivational quotes.
-
----
-
-### Pinned Quote
-
-Always displays one fixed quote selected by the user.
-
-Ideal for long-term personal goals.
-
----
-
-## Custom Quote Library
-
-Users can:
-
-* Add quotes
-* Edit quotes
-* Delete quotes
-* Pin favorites
-* Prevent duplicate entries
-
-All preferences are stored locally for a personalized experience.
-
----
-
-# 🧠 AI Capabilities
-
-Google Gemini powers:
-
-### Productivity Coaching
-
-Interactive conversations based on the user's actual task list.
-
----
-
-### Task Recommendations
-
-Suggests which task should be completed first and explains the reasoning.
-
----
-
-### Motivation
-
-Generates personalized motivational quotes.
-
----
-
-### Productivity Personality Analysis
-
-Analyzes work patterns and classifies users into productivity profiles with personalized improvement suggestions.
-
----
-
-# 📈 Priority Algorithm
-
-Each task receives a dynamic Priority Score (0–100).
+Every task receives a dynamic Priority Score (0–100).
 
 The score combines:
 
@@ -233,38 +186,37 @@ The score combines:
 | Deadline Urgency | 40%    |
 | Quick Win Bonus  | 20%    |
 
-Higher scores indicate tasks requiring immediate attention.
-
-The AI coach uses this score as guidance while also considering deadlines, postponements and workload.
+The Agentic AI uses this score as one of several factors when generating recommendations.
 
 ---
 
 # 🏗 Architecture
 
-Task Catalyst follows a modular architecture.
+Version 3 introduces a modular agent architecture.
 
-```
-Dashboard
+```text
+Tasks
       │
       ▼
-Gemini API
+Priority Engine
       │
       ▼
-AI Response
+Agent Engine
       │
       ▼
-Quote Engine
-      │
-      ├───────────────┐
-      │               │
-      ▼               ▼
-Custom Quotes   Built-in Quotes
+Intervention Generator
       │
       ▼
-Dashboard UI
+Agent Briefing
+      │
+      ▼
+User Confirmation
+      │
+      ▼
+Task Execution
 ```
 
-The quote engine is intentionally separated from Gemini, allowing future extensions without modifying AI logic.
+This separation keeps reasoning, execution, and presentation independent, making future expansion significantly easier.
 
 ---
 
@@ -278,10 +230,10 @@ Stores:
 
 * Task details
 * Deadlines
+* Estimated effort
 * Priority score
-* Estimated time
 * Postpone history
-* Completion timestamp
+* Completion timestamps
 
 ---
 
@@ -290,7 +242,7 @@ Stores:
 Stores:
 
 * User profile
-* Gemini API Key
+* Gemini API key
 * Productivity profile
 * Work schedule
 
@@ -298,15 +250,17 @@ Stores:
 
 # 🔐 Security
 
-Security features include:
+Security is provided through Supabase.
 
-* Row-Level Security (RLS)
-* User-specific access control
-* Secure authentication
-* Protected profile data
+Features include:
+
+* Secure Authentication
+* Row-Level Security
+* Protected user profiles
 * Private Gemini API key storage
+* User-specific data access
 
-Each user can only access their own information.
+Each authenticated user can only access their own information.
 
 ---
 
@@ -327,7 +281,7 @@ Each user can only access their own information.
 
 * PostgreSQL
 
-### AI
+### Artificial Intelligence
 
 * Google Gemini API (Gemini 2.5 Flash)
 
@@ -341,8 +295,24 @@ Task_Catalyst/
 ├── public/
 ├── src/
 │   ├── components/
+│   │     ├── AgentBriefing.jsx
+│   │     ├── AddTaskModal.jsx
+│   │     ├── CustomQuotesModal.jsx
+│   │
 │   ├── lib/
+│   │     ├── agentEngine.js
+│   │     ├── gemini.js
+│   │     ├── priority.js
+│   │     ├── quotes.js
+│   │     └── supabase.js
+│   │
 │   ├── pages/
+│   │     ├── Dashboard.jsx
+│   │     ├── Tasks.jsx
+│   │     ├── AICoach.jsx
+│   │     ├── Settings.jsx
+│   │     └── Auth.jsx
+│   │
 │   ├── App.jsx
 │   ├── main.jsx
 │   └── index.css
@@ -383,7 +353,7 @@ Run locally
 npm run dev
 ```
 
-Production build
+Create a production build
 
 ```bash
 npm run build
@@ -393,63 +363,62 @@ npm run build
 
 # 🔑 Gemini API Setup
 
-1. Sign in to Google AI Studio.
-2. Generate a free Gemini API key.
-3. Open **Settings**.
-4. Paste your API key.
-5. Save changes.
+To enable AI-powered functionality:
 
-Once configured, AI-powered features become immediately available.
+1. Generate a free Gemini API key from Google AI Studio.
+2. Open **Settings**.
+3. Paste your API key.
+4. Save changes.
+
+AI-powered coaching, recommendations, and agent reasoning become available immediately after configuration.
 
 ---
 
 # 🎯 Design Philosophy
 
-Task Catalyst follows three guiding principles.
+Task Catalyst follows three core principles.
 
 ### Intelligent
 
-The application should understand productivity context rather than simply store information.
+The application should understand productivity context rather than simply record tasks.
 
-### Helpful
+### Explainable
 
-Recommendations should reference the user's actual tasks instead of generic advice.
+Every recommendation should include clear reasoning so users understand why it was generated.
 
-### Personalized
+### User Controlled
 
-Every user should experience a workspace tailored to their own productivity style.
+AI may recommend and prepare actions, but execution always remains under the user's control through explicit confirmation.
 
 ---
 
 # 📌 Current Limitations
 
-While Version 3 introduces significant AI and personalization improvements, several capabilities remain intentionally outside the current scope.
+Although Version 3 introduces an Agentic AI layer, several capabilities remain intentionally outside the current scope.
 
 Current limitations include:
 
-* AI-generated daily briefing
-* Offline support is limited. Internet connectivity is required for authentication, database operations, and AI-powered features.
-* Custom quotes are stored locally and are not synchronized across multiple devices.
-* AI recommendations remain request-driven and do not continuously monitor productivity in the background.
-* Priority scores are calculated using deterministic rules rather than adaptive machine learning.
-* Calendar integrations (Google Calendar, Outlook, etc.) are not yet supported.
-* Notifications, reminders, and background scheduling are not available in this version.
-* Recurring task management is currently unavailable.
-* Productivity analytics focus on task completion rather than long-term behavioral trends.
-* AI assists with planning and recommendations but cannot automatically execute task management actions.
-* Better automation and more features in settings
+* Agent interventions are generated on demand rather than continuously in the background.
+* AI actions always require explicit user confirmation before execution.
+* Custom quotes are stored locally and are not synchronized across devices.
+* Priority scoring is rule-based rather than adaptive or machine-learning driven.
+* Calendar integration (Google Calendar, Outlook, etc.) is not yet available.
+* Notifications and reminder scheduling have not been implemented.
+* Recurring task management is currently unsupported.
+* Productivity analytics focus on current task state rather than long-term behavioural trends.
+* Multi-device synchronization for user preferences has not yet been implemented.
 
-These limitations provide a clear roadmap for future architectural evolution while keeping the current application focused, reliable, and maintainable.
+These limitations define future areas of development while keeping the current system reliable, predictable, and maintainable.
 
 ---
 
 # 📜 Version History
 
-| Version | Highlights                                                                                                                                        |
-| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| V1      | Initial AI-powered productivity application with authentication, task management, AI coach, dashboard and priority scoring.                       |
-| V2      | Advanced motivation system, modular quote engine, custom quotes, multiple quote modes and dashboard personalization.                              |
-| **V3**  | Context-aware AI coach, richer prompt engineering, intelligent task reasoning, modular dashboard interactions and enhanced productivity guidance. |
+| Version | Highlights                                                                                                                          |
+| ------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| V1      | Initial productivity application featuring authentication, task management, AI coach, dashboard, and intelligent priority scoring.  |
+| V2      | Personalized motivation system with modular quote engine, custom quotes, multiple quote modes, and dashboard enhancements.          |
+| **V3**  | Agentic AI reasoning engine, Agent Briefing, executable AI actions, interactive AI Coach, and proactive productivity interventions. |
 
 ---
 
@@ -459,7 +428,7 @@ These limitations provide a clear roadmap for future architectural evolution whi
 
 Malaviya National Institute of Technology (MNIT), Jaipur
 
-Electrical Engineering • AI • Full Stack Development
+Electrical Engineering • Full Stack Development • Artificial Intelligence
 
 ---
 

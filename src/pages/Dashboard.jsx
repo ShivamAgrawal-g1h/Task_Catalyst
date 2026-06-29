@@ -1,8 +1,83 @@
+/**
+ *      VERSION 2
+ * Version Overview
+ * Original Dashboard(V1)
+ * In Version 1:
+
+ * load()
+      ↓
+ * loading=false
+      ↓
+ * fetchAI()
+ * Whenever load() runs again, loading changes:
+
+ * true
+    ↓
+ * false
+ * which triggers
+
+ * fetchAI() again.
+
+ * But load() happens after things like:
+
+ * completing a task
+ * adding a task
+ * agent actions
+ * refreshes
+
+ * That means every refresh causes:
+
+ * new motivational quote
+ * new recommendation
+ * new agent reasoning
+
+ * even if the user didn't ask for it.
+ *
+ *
+ *
+ *
+ *
+ * Updated Dashboard(V2)	-- Better
+ *
+ * The added aiRan guard is a genuine improvement because it prevents unnecessary AI execution and makes the dashboard feel more stable.
+ *
+ * current UX is actually predictable
+
+ * User expectation becomes:
+ *
+ * Refresh page → AI gives me a fresh briefing.
+ * Refresh Quote button → only the quote changes.
+ * Task updates → only task list changes.
+ *
+ * Every action has one clear purpose.
+ *
+ *
+ *
+ * It also fits the "Agent" philosophy
+ *
+ * The agent is acting like a morning briefing.
+ *
+ * Think of it as:
+ *
+ * "Here's today's situation."
+ *
+ * Then the user works.
+ *
+ * The agent shouldn't interrupt every few minutes saying:
+ *
+ * "Actually I've changed my mind."
+ *
+ * That would make it feel less intelligent, not more.
+ *
+ *
+ */
 import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase.js';
 import { generateMotivationalQuote, generateTaskRecommendation } from '../lib/gemini.js';
 import { resolveQuote } from '../lib/quotes.js';
+import { analyzeAndAct } from '../lib/agentEngine.js';
+import AgentBriefing from '../components/AgentBriefing.jsx';
 import { getPriorityLabel, getDeadlineStatus } from '../lib/priority.js';
 import AddTaskModal from '../components/AddTaskModal.jsx';
 import CustomQuotesModal from '../components/CustomQuotesModal.jsx';
@@ -28,6 +103,7 @@ export default function Dashboard({ session }) {
   const [recommendation, setRec]  = useState('');
   const [showAdd, setShowAdd]     = useState(false);
   const [showQuotes, setShowQuotes] = useState(false);
+  const [interventions, setInterventions] = useState([]);
   const [loading, setLoading]     = useState(true);
   const navigate = useNavigate();
   const userId = session.user.id;
@@ -43,8 +119,16 @@ export default function Dashboard({ session }) {
     setLoading(false);
   }, [userId]);
 
+  const [aiRan, setAiRan] = useState(false);
+
   useEffect(() => { load(); }, [load]);
-  useEffect(() => { if (!loading) fetchAI(tasks, profile); }, [loading]); // eslint-disable-line
+  // Only run AI on the very first load, not on every task refresh triggered by agent actions
+  useEffect(() => {
+    if (!loading && !aiRan) {
+      setAiRan(true);
+      fetchAI(tasks, profile);
+    }
+  }, [loading]); // eslint-disable-line
 
   async function fetchAI(t, p) {
     const key = p?.gemini_api_key || '';
@@ -52,35 +136,31 @@ export default function Dashboard({ session }) {
     const done    = t.filter(x => x.status === 'completed');
     setQL(true);
     const ctx = `${pending.length} pending tasks, ${done.length} completed, type: ${p?.productivity_type || 'developing'}, CS student`;
-    const [aiText, rec] = await Promise.all([
+    const [aiText, rec, ivs] = await Promise.all([
       generateMotivationalQuote(ctx, key),
       generateTaskRecommendation(t, p, key),
+      analyzeAndAct(t, p, key),
     ]);
     setQuoteObj(resolveQuote(aiText));
     setRec(rec || '');
+    setInterventions(ivs);
     setQL(false);
   }
 
   async function refreshQuote() {
     setQL(true);
-    try{
-      const key = profile?.gemini_api_key || '';
-      const ctx = `student with ${tasks.filter(t => t.status === 'pending').length} pending tasks, needs fresh motivation`;
-
-      const aiText = await generateMotivationalQuote(ctx, key);
-
-      setQuoteObj(resolveQuote(aiText));
-    }
-    finally {
-      setQL(false);
-    }
+    const key = profile?.gemini_api_key || '';
+    const ctx = `student with ${tasks.filter(t => t.status === 'pending').length} pending tasks, needs fresh motivation`;
+    const aiText = await generateMotivationalQuote(ctx, key);
+    setQuoteObj(resolveQuote(aiText));
+    setQL(false);
   }
 
   // Called by CustomQuotesModal when mode/quotes change — re-roll with current AI result
   function handleQuoteSettingsChanged() {
     setQuoteObj(prev => {
       // Re-resolve with the same AI text if it was AI-sourced, else null
-      const aiText = prev.source === 'ai' ? prev : null;
+      const aiText = prev.source === 'ai' ? prev.text : null; // Corrected ( was wrong in below version )
       return resolveQuote(aiText);
     });
   }
@@ -202,6 +282,16 @@ export default function Dashboard({ session }) {
         <Stat icon={<AlertTriangle size={18} color="var(--rose-400)" />}   label="Overdue" value={overdue.length} alert={overdue.length > 0} />
         <Stat icon={<TrendingUp size={18} color="var(--amber-400)" />}    label="Rate"   value={`${rate}%`}       />
       </div>
+
+      {/* ── Agent Briefing ─────────────────────────────────── */}
+      {interventions.length > 0 && (
+        <AgentBriefing
+          interventions={interventions}
+          userId={userId}
+          onTasksAdded={load}
+          onDismiss={id => setInterventions(prev => prev.filter(iv => iv.id !== id))}
+        />
+      )}
 
       {/* ── Today / Tomorrow ───────────────────────────────── */}
       {(todayT.length > 0 || tomorrowT.length > 0) && (
