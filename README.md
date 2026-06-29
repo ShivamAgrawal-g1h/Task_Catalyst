@@ -1,100 +1,237 @@
-# 🚀 Task Catalyst (Version 1)
+# 🚀 Task Catalyst
 
-> **Version 1 — Initial AI-Powered Productivity Companion**
+> **An AI-Powered Productivity Companion for Students**
 
-Task Catalyst is an AI-assisted task management application designed to help users organize work, prioritize tasks intelligently, and improve productivity through AI-powered recommendations and coaching.
+Task Catalyst is an intelligent productivity application that combines traditional task management with Google's Gemini AI to help students organize work, prioritize effectively, and stay motivated.
 
-This repository represents the **initial implementation (V1)** of the project. It establishes the core architecture, user authentication, task management system, Google Gemini integration, and responsive user interface that later versions build upon.
-
----
-
-# 📖 Project Overview
-
-Task Catalyst combines modern web technologies with Artificial Intelligence to create a personal productivity companion.
-
-Instead of functioning as a traditional to-do application, the system provides:
-
-* AI-generated motivational quotes
-* AI productivity coaching
-* Intelligent task prioritization
-* Personalized work scheduling
-* Secure cloud-based task storage
-* Responsive user experience
-
-This version serves as the foundation for future architectural improvements and advanced AI capabilities.
+Unlike conventional to-do applications, Task Catalyst provides contextual AI assistance, intelligent task recommendations, personalized coaching, and a customizable motivational quote system that adapts to each user's preferences.
 
 ---
 
-# ✨ Features
+# ✨ Version
 
-## Authentication
+**Current Version:** **V2**
 
-* User Registration
-* User Login
-* Secure authentication using Supabase Auth
+This release introduces a significantly enhanced motivation system through a fully customizable quote engine, improved AI integration, better dashboard interactions, and a more personalized user experience.
 
 ---
 
-## Dashboard
+# 📖 Overview
 
-* Personalized greeting
-* Live productivity statistics
-* Pending task summary
-* Completed task summary
-* Overdue task count
-* AI-generated motivational quote
-* AI task recommendation
-* Top priority tasks
+Task Catalyst was created with one objective:
 
----
+> **Help students consistently finish important work instead of simply recording it.**
 
-## Task Management
+The application combines:
 
-* Create tasks
-* Edit tasks
-* Delete tasks
-* Mark tasks as completed
-* Postpone tasks
-* Category support
-* Importance rating (1–5)
-* Deadline management
-* Estimated completion time
-* Task filtering
-* Task sorting
+* Intelligent task management
+* AI-powered coaching
+* Smart prioritization
+* Personalized motivation
+* Productivity insights
+* Modern responsive interface
+
+Every feature is designed to reduce procrastination while making planning feel natural rather than overwhelming.
 
 ---
 
-## AI Coach
+# 🌟 Core Features
 
-Google Gemini powered assistant capable of:
+## 🔐 Secure Authentication
+
+* Email & Password authentication
+* Supabase Authentication
+* Automatic user profile creation
+* Row-Level Security (RLS)
+* User-specific data isolation
+
+---
+
+## 📋 Task Management
+
+Create and manage tasks with:
+
+* Title
+* Description
+* Deadline
+* Importance Rating (1–5)
+* Estimated Time
+* Category
+* Status Tracking
+* Priority Score
+* Postpone Counter
+
+Supported operations:
+
+* Create
+* Update
+* Delete
+* Complete
+* Postpone
+* Filter
+* Sort
+
+---
+
+## 🧠 AI Productivity Coach
+
+Powered by **Google Gemini**.
+
+Capabilities include:
 
 * Productivity coaching
-* Answering planning questions
+* Study guidance
+* Planning assistance
+* Task prioritization advice
 * Motivation
-* General work guidance
+* Personalized conversations
 
-Includes:
+Unlike generic chatbots, the coach understands:
 
-* Quick prompt buttons
+* Current pending tasks
+* Overdue work
+* Upcoming deadlines
+* Task priorities
+* Postponement history
+
+This allows responses to reference the user's actual workload rather than giving generic productivity advice.
+
+---
+
+## 📊 Intelligent Dashboard
+
+The dashboard acts as the user's productivity command center.
+
+It displays:
+
+* Personalized greeting
+* Daily motivation
+* Pending tasks
+* Completed tasks
+* Overdue tasks
+* Completion rate
+* AI recommendations
+* Top priority tasks
+* Quick task completion
+
+---
+
+# 🌟 New in Version 2
+
+Version 2 introduces the largest functional improvement since the project's initial release.
+
+## 🎯 Advanced Quote Engine
+
+The previous static quote system has been replaced with a fully configurable motivation engine.
+
+Features include:
+
+* AI-generated quotes
+* Personal quote collection
+* Built-in inspirational library
+* Pinned favorite quotes
+* Smart quote selection
+* Duplicate prevention
+* Non-repeating quote rotation
+* Local persistence
+
+---
+
+## 📚 Custom Quote Library
+
+Users can now maintain their own motivational collection.
+
+Capabilities:
+
+* Add quotes
+* Edit quotes
+* Delete quotes
+* Persist locally
+* Prevent duplicate entries
+
+---
+
+## 🎨 Four Quote Modes
+
+Users can choose how motivation is generated.
+
+### Mixed Mode
+
+Combines:
+
+* Gemini AI
+* Personal quotes
+* Built-in classics
+
+---
+
+### AI Only
+
+Uses Gemini-generated quotes whenever available.
+
+Automatically falls back if AI is unavailable.
+
+---
+
+### My Quotes Only
+
+Displays only quotes written by the user.
+
+If no custom quotes exist, built-in classics are used.
+
+---
+
+### Pinned Quote
+
+Allows one quote to remain permanently displayed until changed.
+
+Ideal for personal goals or favorite reminders.
+
+---
+
+## 🏷 Quote Source Badges
+
+Every displayed quote now identifies its origin.
+
+Possible sources:
+
+* Gemini AI
+* My Quote
+* Classic Inspiration
+
+This provides transparency while improving user experience.
+
+---
+
+## 🔄 Smarter Quote Rotation
+
+The new quote engine avoids immediately repeating previously displayed quotes.
+
+When multiple quotes are available, intelligent randomization keeps motivation fresh.
+
+---
+
+# 🧠 AI Features
+
+Google Gemini powers:
+
+* Motivational quote generation
+* Productivity coaching
+* Task recommendations
 * Personality analysis
-* Basic productivity insights
+
+If Gemini is unavailable:
+
+* Intelligent fallback quotes are used
+* Application remains fully functional
 
 ---
 
-## Settings
+# 📈 Priority Algorithm
 
-Users can configure:
+Each task receives a score between **0–100**.
 
-* Display name
-* Gemini API Key
-* Working hours
-* Productivity preferences
-
----
-
-# 🧠 Priority Algorithm
-
-Each task receives a calculated priority score based on three factors.
+The score is calculated using:
 
 | Factor           | Weight |
 | ---------------- | ------ |
@@ -102,36 +239,80 @@ Each task receives a calculated priority score based on three factors.
 | Deadline Urgency | 40%    |
 | Quick Win Bonus  | 20%    |
 
-The score helps determine which task should receive the highest attention.
+Higher scores indicate tasks that deserve immediate attention.
+
+---
+
+# 🗄 Database
+
+The application currently uses two primary tables.
+
+## tasks
+
+Stores:
+
+* task information
+* deadlines
+* importance
+* priority scores
+* postpone history
+* completion timestamps
+
+---
+
+## user_profiles
+
+Stores:
+
+* profile information
+* Gemini API key
+* work schedule
+* productivity type
+
+---
+
+# 🔐 Security
+
+Security is handled through Supabase.
+
+Features include:
+
+* Row-Level Security
+* Secure authentication
+* Protected user profiles
+* Automatic profile creation
+* Private Gemini API key storage
+
+Every user can only access their own information.
 
 ---
 
 # 🛠 Technology Stack
 
-### Frontend
+## Frontend
 
 * React
 * Vite
 * JavaScript
 * CSS
 
-### Backend
+## Backend
 
 * Supabase
 
-### AI
+## Database
+
+* PostgreSQL
+
+## Artificial Intelligence
 
 * Google Gemini API
-
-### Database
-
-PostgreSQL (Supabase)
 
 ---
 
 # 📂 Project Structure
 
-```
+```text
 Task_Catalyst/
 │
 ├── public/
@@ -153,83 +334,34 @@ Task_Catalyst/
 
 ---
 
-# 🗄 Database
+# 🚀 Installation
 
-The application currently uses two primary tables.
-
-### tasks
-
-Stores:
-
-* title
-* description
-* deadline
-* importance
-* category
-* status
-* priority score
-* postpone count
-
----
-
-### user_profiles
-
-Stores:
-
-* profile information
-* work schedule
-* Gemini API key
-* productivity type
-
----
-
-# 🔐 Security
-
-* Row Level Security (RLS) enabled
-* User-specific data isolation
-* Secure authentication using Supabase Auth
-* Automatic profile creation using database trigger
-
----
-
-# 🚀 Running the Project
-
-## Clone Repository
+Clone the repository
 
 ```bash
 git clone <repository-url>
 ```
 
----
-
-## Install Dependencies
+Install dependencies
 
 ```bash
 npm install
 ```
 
----
+Configure environment variables
 
-## Configure Environment
-
-Create a `.env` file and add your Supabase credentials.
-
-```
-VITE_SUPABASE_URL=YOUR_SUPABASE_URL
-VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_KEY
+```env
+VITE_SUPABASE_URL=YOUR_URL
+VITE_SUPABASE_ANON_KEY=YOUR_KEY
 ```
 
----
-
-## Start Development Server
+Run development server
 
 ```bash
 npm run dev
 ```
 
----
-
-## Production Build
+Production build
 
 ```bash
 npm run build
@@ -237,35 +369,50 @@ npm run build
 
 ---
 
-# 📌 Current Limitations (Version 1)
+# 🔑 Gemini API Setup
 
-Although fully functional, Version 1 has several architectural limitations.
+To unlock AI-powered features:
 
-* AI interactions are largely reactive.
-* Dashboard intelligence is limited.
-* Recommendation engine is rule-based.
-* No autonomous AI reasoning.
-* No intervention system.
-* Limited modularization.
-* Basic settings management.
-* Initial UI implementation.
+1. Open **Settings**
+2. Visit **Google AI Studio**
+3. Generate a free Gemini API key
+4. Paste the key into Task Catalyst
+5. Save settings
 
-These limitations become the focus of subsequent versions.
+Once configured, AI features become immediately available.
 
 ---
 
-# 🎯 Learning Objectives
+# 🎯 Design Philosophy
 
-This project was developed to explore:
+Task Catalyst follows a simple principle:
 
-* Modern React development
-* Component-based architecture
-* Backend integration with Supabase
-* Authentication systems
-* Database design
-* Google Gemini API integration
-* Responsive UI design
-* AI-assisted productivity applications
+> Productivity tools should reduce mental effort—not create more of it.
+
+Every interface decision focuses on:
+
+* Minimal friction
+* Fast interactions
+* Clear prioritization
+* Useful AI assistance
+* Personalized motivation
+
+---
+
+# 📌 Current Limitations
+
+Current quote preferences are stored locally.
+
+Future versions may include:
+* Notifications, reminders, and background scheduling are not available in this version.
+* Cloud synchronization
+* AI-generated daily briefing
+* Offline support is limited. Internet connectivity is required for authentication, database operations, and AI-powered features.
+* Shared quote collections
+* Advanced productivity analytics
+* Intelligent scheduling agent
+* Multi-device quote synchronization
+* Better automation and more features in settings
 
 ---
 
@@ -275,6 +422,8 @@ This project was developed to explore:
 
 Malaviya National Institute of Technology (MNIT), Jaipur
 
+Electrical Engineering • AI • Full Stack Development
+
 ---
 
-**Version:** V1 – Initial Foundation
+## ⭐ If you found this project interesting, consider giving it a star.
