@@ -4,129 +4,100 @@ All notable changes to **Task Catalyst** are documented in this file.
 
 ---
 
-# Version 3
+# Version 4
 
-> **Release Type:** Major Feature Update
+> **Release Type:** Feature Enhancement & User Experience Update
 
-Version 3 introduces the first **Agentic AI layer** to Task Catalyst, enabling the application to analyze task data, generate proactive interventions, and assist users through executable AI actions.
+Version 4 focuses on improving the daily productivity workflow by introducing an integrated Focus Timer, reorganizing quote personalization into a dedicated Settings section, and refining dashboard intelligence introduced in Version 3.
 
 ---
 
 ## Added
 
-### Agentic AI Engine
+### Focus Timer
 
-Introduced a dedicated reasoning layer responsible for analyzing the current task state and generating structured productivity interventions.
+Added an integrated Pomodoro-style Focus Timer directly to the Dashboard.
 
-The engine evaluates:
+Features include:
 
-* Pending tasks
-* Overdue tasks
-* Upcoming deadlines
-* Priority scores
-* Estimated workload
-* Postponement history
-
----
-
-### Agent Briefing
-
-Added a new Dashboard section that presents AI-generated observations in the form of concise intervention cards.
-
-Each briefing contains:
-
-* Observation
-* Reasoning
-* Optional executable action
+* 25, 45 and 60 minute focus presets
+* Start, Pause and Reset controls
+* Circular progress indicator
+* Session completion indicator
+* Compact and expanded layouts
+* Fully client-side implementation with no backend dependency
 
 ---
 
-### Executable AI Actions
+### Dedicated Quote Preferences
 
-Users can now execute supported AI suggestions directly from the interface.
+Added a new **Quote Preferences** section inside Settings.
 
-Current supported actions include:
+Users can now:
 
-* Split a large task into subtasks
-* Postpone a lower-priority task
-* Generate preparation tasks for important events
-
----
-
-### AI Preparation Plans
-
-For high-priority events (assignments, interviews, presentations, exams, etc.), the agent can automatically generate a structured preparation plan and add it to the task list.
+* Select quote display mode
+* View current quote configuration
+* Access the Custom Quotes Manager
+* Manage personal quote collections from a centralized location
 
 ---
 
 ## Changed
 
-### AI Coach
-
-Upgraded from a conversational assistant to an interactive productivity assistant.
-
-The coach can now:
-
-* Detect executable opportunities
-* Request user confirmation
-* Execute supported actions after approval
-* Continue conversations using recent chat history
-
----
-
 ### Dashboard
 
-Enhanced the Dashboard by integrating:
+Enhanced the Dashboard with:
 
-* Agent Briefing
-* Executable intervention cards
-* Smarter AI refresh behaviour
-* Better separation between task updates and AI updates
+* Integrated Focus Timer
+* Adaptive layout based on upcoming deadlines
+* Better use of available dashboard space
+* Improved balance between productivity information and focus tools
 
 ---
 
-### AI Reasoning
+### Quote Personalization
 
-Gemini prompts now include richer productivity context rather than relying only on user messages.
+Expanded the quote configuration experience.
 
-Additional context includes:
+The application now provides four configurable quote modes:
 
-* Pending tasks
-* Overdue tasks
-* Deadline urgency
-* Priority scores
-* Task history
+* Mixed
+* AI Only
+* My Quotes Only
+* Pinned Quote
+
+Changes are applied immediately and synchronized with the Dashboard without requiring additional setup.
+
+---
+
+### Settings
+
+Redesigned the Settings page to better organize personalization features.
+
+Improvements include:
+
+* Dedicated Quote Preferences section
+* Improved settings hierarchy
+* Better separation between profile, AI configuration, quote management, and work schedule
 
 ---
 
 ## Improved
 
-* Better separation between AI reasoning and UI components.
-* Reduced unnecessary AI executions during normal task updates.
-* Improved modularity by introducing a dedicated Agent Engine.
-* More actionable AI responses with task-specific recommendations.
-* Clearer interaction flow through explicit user confirmation before executing AI actions.
+* Better synchronization between Quote Preferences and Dashboard.
+* Improved local storage handling for quote settings.
+* Cleaner integration with the existing quote management system.
+* More intuitive personalization workflow.
+* Better dashboard responsiveness through adaptive component layouts.
 
 ---
 
 ## Fixed
 
-* Improved synchronization between AI suggestions and Dashboard state.
-* Improved handling of task refreshes after AI actions.
-* Reduced repeated AI briefings during normal Dashboard updates.
-* Improved fallback handling for AI-generated actions.
-
----
-
-## Files Added
-
-```text
-src/components/
-    AgentBriefing.jsx
-
-src/lib/
-    agentEngine.js
-```
+* Improved compatibility between Settings and the quote engine.
+* Eliminated inconsistencies between quote mode selection and Dashboard rendering.
+* Improved synchronization after closing the Custom Quotes Manager.
+* Reduced duplicate configuration logic across quote-related components.
 
 ---
 
@@ -135,16 +106,18 @@ src/lib/
 ```text
 src/pages/
     Dashboard.jsx
-    AICoach.jsx
+    Settings.jsx
 ```
 
 ---
 
 ## Database
 
-No schema changes.
+No database changes.
 
-No database migration required.
+No schema updates required.
+
+No migrations added.
 
 ---
 
@@ -152,20 +125,21 @@ No database migration required.
 
 None.
 
-Existing user data remains fully compatible.
+Existing user data and previous configurations remain fully compatible.
 
 ---
 
 ## Summary
 
-Version 3 extends Task Catalyst beyond AI-assisted task management by introducing an **Agentic AI workflow**. The application can now analyze the user's workload, present meaningful interventions, and assist with productivity actions while keeping the user in control through explicit confirmation.
+Version 4 enhances the overall productivity experience without altering the core Agentic AI architecture introduced in Version 3. The addition of the integrated Focus Timer encourages distraction-free work sessions, while the redesigned Quote Preferences section provides a more organized and personalized motivation system.
 
 ---
 
 ## Version Progression
 
-| Version | Primary Focus                           |
-| ------- | --------------------------------------- |
-| V1      | Core Productivity Platform              |
-| V2      | Personalized Motivation & Quote System  |
-| **V3**  | Agentic AI & Productivity Interventions |
+| Version | Primary Focus                                   |
+| ------- | ----------------------------------------------- |
+| V1      | Core Productivity Platform                      |
+| V2      | Personalized Motivation & Quote System          |
+| V3      | Agentic AI & Productivity Interventions         |
+| **V4**  | Focus Management & Personalization Improvements |
