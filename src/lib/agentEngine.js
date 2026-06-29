@@ -88,15 +88,25 @@ export async function analyzeAndAct(tasks, profile, apiKey) {
     });
   }
 
-  // ── 2. Deadline crunch (72 h) ────────────────────────────────
+  // ── 2. Deadline crunch (72 h window) ────────────────────────
   if (dueIn72.length >= 2) {
-    const top = [...dueIn72].sort((a, b) => b.priority_score - a.priority_score)[0];
+    const top      = [...dueIn72].sort((a, b) => b.priority_score - a.priority_score)[0];
+    const soonest  = [...dueIn72].sort((a, b) => hoursUntil(a.deadline) - hoursUntil(b.deadline))[0];
+    const minH     = Math.round(hoursUntil(soonest.deadline));
     const totalEst = dueIn72.reduce((s, t) => s + (t.time_estimate || 1), 0);
+
+    // Build a human headline based on real urgency
+    const nearestLabel = minH < 1
+      ? 'in under an hour'
+      : minH < 24
+        ? `in ${minH}h`
+        : `in ${Math.round(minH / 24)} day${Math.round(minH / 24) === 1 ? '' : 's'}`;
+
     interventions.push({
       id: 'deadline_crunch',
       type: 'warning',
-      headline: `${dueIn72.length} tasks due in 72 h · ~${totalEst}h of work`,
-      reason: `"${top.title}" is your highest-priority item (score ${top.priority_score}). You have roughly ${totalEst} hours of estimated work and only 72 hours — start today.`,
+      headline: `${dueIn72.length} tasks due soon — nearest ${nearestLabel} · ~${totalEst}h of work`,
+      reason: `"${soonest.title}" is your most urgent (due ${nearestLabel}). Highest-priority overall is "${top.title}" (score ${top.priority_score}). You have ~${totalEst}h of work across these tasks — start now.`,
       action: null,
     });
   }
@@ -104,12 +114,19 @@ export async function analyzeAndAct(tasks, profile, apiKey) {
   // ── 3. Single critical deadline within 24 h ──────────────────
   if (dueIn24.length === 1 && dueIn72.length <= 2) {
     const t = dueIn24[0];
-    const h = Math.round(hoursUntil(t.deadline));
+    const rawH = hoursUntil(t.deadline);
+    // Build a human time label: use minutes when under 1h, hours otherwise
+    const timeLabel = rawH < 1
+      ? `${Math.max(1, Math.round(rawH * 60))} min`
+      : `${Math.round(rawH)}h`;
+    const startAdvice = rawH <= t.time_estimate
+      ? 'immediately — you may already be cutting it close'
+      : 'in the next hour';
     interventions.push({
       id: 'single_critical',
       type: 'warning',
-      headline: `"${t.title}" is due in ${h}h`,
-      reason: `This is your most time-sensitive task right now. With ~${t.time_estimate}h estimated, start no later than ${h - t.time_estimate - 0.5 < 0 ? 'immediately' : 'in the next hour'}.`,
+      headline: `"${t.title}" is due in ${timeLabel}`,
+      reason: `This is your most time-sensitive task right now. With ~${t.time_estimate}h estimated, start ${startAdvice}.`,
       action: null,
     });
   }
@@ -255,33 +272,40 @@ No markdown, no wrapping.`,
   }
 }
 /**
- * /**
- *            VERSION 3
+ *            VERSION 4
  *
- * | Area                          | Version 2                                             | Version 3                                                  | Better        |
- * | ----------------------------- | ----------------------------------------------------- | ---------------------------------------------------------- | ------------- |
- * | Overdue intervention          | Warning only                                          | Warning + smart postpone action                            | **Version 3** |
- * | Task prioritization           | Highlights highest-priority overdue task              | Highlights highest-priority task while postponing lowest   | **Version 3** |
- * | Agent actions                 | Split task, Add prep tasks                            | Adds intelligent "Postpone Task" action                    | **Version 3** |
- * | Deadline handling             | Clamped prep-task deadlines                           | Same                                                       | Same          |
- * | AI reasoning                  | Same                                                  | Same                                                       | Same          |
- * | Reliability                   | Stable                                                | Stable                                                     | Same          |
+ * | Area                          | Version 3                                              | Version 4                                                       | Better        |
+ * | ----------------------------- | ------------------------------------------------------ | --------------------------------------------------------------- | ------------- |
+ * | Deadline crunch headline      | Fixed "72 h" wording                                   | Uses nearest actual deadline ("5h", "2 days", "under an hour")  | **Version 4** |
+ * | Urgency reasoning             | Highest-priority task only                             | Separates most urgent task from highest-priority task           | **Version 4** |
+ * | Single critical deadline      | Rounded hours only                                     | Shows minutes when <1h and avoids "0h" display                 | **Version 4** |
+ * | Start recommendation          | Based on hour subtraction formula                      | Uses clearer human-readable advice ("start immediately")        | **Version 4** |
+ * | Overdue intervention          | Smart postpone action                                  | Same                                                            | Same          |
+ * | Chronic postpone handling     | Split into 3 focused 20-minute sub-tasks               | Same                                                            | Same          |
+ * | AI prep-plan generation       | Dynamic AI-generated preparation tasks                 | Same                                                            | Same          |
+ * | AI insight generation         | Same                                                   | Same                                                            | Same          |
+ * | Deadline clamping             | Prevents AI-generated tasks from being scheduled past  | Same                                                            | Same          |
+ * | Reliability                   | Stable                                                 | Stable                                                          | Same          |
  *
  *
  * Quality assessment:
- * Agent reasoning: Slightly improved
- * Features: Improved
+ * UX: Improved
+ * Agent reasoning: Improved
+ * Features: Same
  * Reliability: Same
  * Performance: Same
- * Code quality: Same
+ * Code quality: Slightly improved
  *
- * The only functional change is the addition of a new "Postpone Task"
- * intervention when multiple overdue tasks exist.
+ * Version 4 focuses on improving how urgency is communicated rather than
+ * changing the reasoning engine itself.
  *
- * The agent now recommends focusing on the highest-priority overdue task
- * while offering to postpone the lowest-priority overdue task by 2 days,
- * reducing workload without changing the existing reasoning engine.
+ * The deadline-crunch intervention now reports the nearest real deadline
+ * instead of always referring to a 72-hour window, distinguishes the most
+ * urgent task from the highest-priority task, and provides more natural,
+ * human-readable messaging for imminent deadlines (including minute-level
+ * precision for single critical tasks).
  *
- * No regressions, crashes, or breaking behavioral changes were found
- * compared to Version 2.
+ * No changes were made to AI planning, intervention ordering, scoring,
+ * or task-generation logic. This version is therefore a UX refinement
+ * with no known behavioral regressions compared to Version 3.
  */

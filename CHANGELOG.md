@@ -4,41 +4,54 @@ All notable changes to **Task Catalyst** are documented in this file.
 
 ---
 
-# Version 4
+# Version 5
 
-> **Release Type:** Feature Enhancement & User Experience Update
+> **Release Type:** Architecture, Reliability & Customization Update
 
-Version 4 focuses on improving the daily productivity workflow by introducing an integrated Focus Timer, reorganizing quote personalization into a dedicated Settings section, and refining dashboard intelligence introduced in Version 3.
+Version 5 focuses on strengthening the application's internal architecture through Dashboard Manager, improved database design, smarter agent reasoning, and enhanced maintainability while preserving the productivity workflow introduced in previous versions.
 
 ---
 
 ## Added
 
-### Focus Timer
+### Dashboard Manager
 
-Added an integrated Pomodoro-style Focus Timer directly to the Dashboard.
+Introduced a customizable Dashboard Manager allowing users to control the visibility of Dashboard widgets.
 
-Features include:
+Supported widgets include:
 
-* 25, 45 and 60 minute focus presets
-* Start, Pause and Reset controls
-* Circular progress indicator
-* Session completion indicator
-* Compact and expanded layouts
-* Fully client-side implementation with no backend dependency
+* Daily Motivation Quote
+* Agent Briefing
+* Focus Timer
+* AI Recommendation
+* Due Today / Tomorrow cards
+
+Dashboard preferences are now stored per user in Supabase.
 
 ---
 
-### Dedicated Quote Preferences
+### Dashboard Preference Architecture
 
-Added a new **Quote Preferences** section inside Settings.
+Added `dashboardPrefs.js` as the centralized configuration layer.
 
-Users can now:
+Introduced:
 
-* Select quote display mode
-* View current quote configuration
-* Access the Custom Quotes Manager
-* Manage personal quote collections from a centralized location
+* `DEFAULT_PREFS`
+* `WIDGET_DEFS`
+* `resolvePrefs()`
+
+This establishes a single source of truth for Dashboard widget configuration and simplifies future expansion.
+
+---
+
+### Database Improvements
+
+Added new database capabilities including:
+
+* `dashboard_prefs` JSONB column
+* Validation constraints for task and profile data
+* Performance indexes on frequently queried fields
+* Safer migration execution using `IF NOT EXISTS`
 
 ---
 
@@ -46,58 +59,84 @@ Users can now:
 
 ### Dashboard
 
-Enhanced the Dashboard with:
-
-* Integrated Focus Timer
-* Adaptive layout based on upcoming deadlines
-* Better use of available dashboard space
-* Improved balance between productivity information and focus tools
+* Dashboard now renders widgets based on stored user preferences.
+* Dashboard configuration is dynamically generated instead of relying on hard-coded visibility rules.
+* Improved separation between UI rendering and configuration logic.
 
 ---
 
-### Quote Personalization
+### Agent Engine
 
-Expanded the quote configuration experience.
+Improved AI reasoning by:
 
-The application now provides four configurable quote modes:
-
-* Mixed
-* AI Only
-* My Quotes Only
-* Pinned Quote
-
-Changes are applied immediately and synchronized with the Dashboard without requiring additional setup.
+* correcting deadline interpretation
+* improving urgency calculations
+* generating more realistic intervention messages
+* refining task prioritization logic
 
 ---
 
-### Settings
+### Agent Briefing
 
-Redesigned the Settings page to better organize personalization features.
+Enhanced the briefing interface with:
 
-Improvements include:
+* observation count badge
+* stronger visual hierarchy
+* improved intervention previews
+* smarter split-task scheduling
+* better priority recalculation for generated subtasks
+* improved execution feedback
 
-* Dedicated Quote Preferences section
-* Improved settings hierarchy
-* Better separation between profile, AI configuration, quote management, and work schedule
+---
+
+### Task Management
+
+Improved task interaction experience by:
+
+* fixing dropdown overlap issues
+* improving task action consistency
+* refining split-task behaviour
+* improving generated deadline distribution
+
+---
+
+### Database Security
+
+Strengthened database security by:
+
+* recreating authentication trigger using explicit schema references
+* setting a fixed `search_path`
+* improving trigger safety against search path injection
+* preserving migration reusability
 
 ---
 
 ## Improved
 
-* Better synchronization between Quote Preferences and Dashboard.
-* Improved local storage handling for quote settings.
-* Cleaner integration with the existing quote management system.
-* More intuitive personalization workflow.
-* Better dashboard responsiveness through adaptive component layouts.
+* Better maintainability through centralized dashboard configuration.
+* Reduced duplicated configuration across Dashboard and Settings.
+* Improved scalability of future Dashboard features.
+* Cleaner separation between application logic and presentation.
+* Improved overall code documentation and internal architecture.
 
 ---
 
 ## Fixed
 
-* Improved compatibility between Settings and the quote engine.
-* Eliminated inconsistencies between quote mode selection and Dashboard rendering.
-* Improved synchronization after closing the Custom Quotes Manager.
-* Reduced duplicate configuration logic across quote-related components.
+* Fixed task action dropdown rendering behind neighbouring task cards.
+* Fixed misleading Agent Briefing messages caused by inaccurate deadline interpretation.
+* Improved split-task generation for more realistic scheduling.
+* Improved consistency of generated priority scores.
+* Improved synchronization between Dashboard preferences and rendered widgets.
+
+---
+
+## Files Added
+
+```text
+src/lib/
+    dashboardPrefs.js
+```
 
 ---
 
@@ -107,17 +146,33 @@ Improvements include:
 src/pages/
     Dashboard.jsx
     Settings.jsx
+    Tasks.jsx
+
+src/components/
+    AgentBriefing.jsx
+
+src/lib/
+    agentEngine.js
+
+supabase/migrations/
+    dashboard_preferences_and_security.sql
 ```
 
 ---
 
 ## Database
 
-No database changes.
+### Added
 
-No schema updates required.
+* `dashboard_prefs` JSONB column
+* Validation constraints
+* Performance indexes
 
-No migrations added.
+### Updated
+
+* Secure `handle_new_user()` trigger
+* Authentication trigger recreation
+* Improved migration safety
 
 ---
 
@@ -125,21 +180,22 @@ No migrations added.
 
 None.
 
-Existing user data and previous configurations remain fully compatible.
+All existing user data, tasks, and profiles remain compatible with previous versions.
 
 ---
 
 ## Summary
 
-Version 4 enhances the overall productivity experience without altering the core Agentic AI architecture introduced in Version 3. The addition of the integrated Focus Timer encourages distraction-free work sessions, while the redesigned Quote Preferences section provides a more organized and personalized motivation system.
+Version 5 is an architectural refinement release. Rather than introducing major end-user features, it improves customization, database robustness, AI reasoning quality, and long-term maintainability. The introduction of Dashboard Manager and centralized widget configuration provides a scalable foundation for future Dashboard enhancements while strengthening the overall reliability of Task Catalyst.
 
 ---
 
 ## Version Progression
 
-| Version | Primary Focus                                   |
-| ------- | ----------------------------------------------- |
-| V1      | Core Productivity Platform                      |
-| V2      | Personalized Motivation & Quote System          |
-| V3      | Agentic AI & Productivity Interventions         |
-| **V4**  | Focus Management & Personalization Improvements |
+| Version | Primary Focus                                                            |
+| ------- | ------------------------------------------------------------------------ |
+| V1      | Core Productivity Platform                                               |
+| V2      | Personalized Motivation System                                           |
+| V3      | Agentic AI & Intelligent Dashboard                                       |
+| V4      | Focus Management & UI Refinements                                        |
+| **V5**  | Dashboard Customization, Database Hardening & Architectural Improvements |

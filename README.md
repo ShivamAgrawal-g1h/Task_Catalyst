@@ -1,363 +1,286 @@
-# 🚀 Task Catalyst
+# Task Catalyst — Version 5
 
-> **An Agentic AI Productivity Companion for Students**
+An AI-powered productivity companion that combines intelligent task management, personalized motivation, proactive agent reasoning, and customizable productivity tools into a single workspace for students.
 
-Task Catalyst is an AI-powered productivity application designed to help students organize their academic workload, prioritize effectively, and receive intelligent assistance through Google's Gemini AI.
-
-Unlike traditional task managers that simply record tasks, Task Catalyst actively analyzes workloads, highlights productivity risks, and provides actionable recommendations while ensuring the user remains in complete control.
+Version 5 focuses on **product maturity** rather than introducing a completely new AI capability. It improves the reliability of the Agentic Dashboard, introduces customizable dashboard management, strengthens database design, and enhances the application's maintainability for future growth.
 
 ---
 
-# 📌 Version
+# What's New in Version 5
 
-**Current Version:** **V4**
+### Dashboard Manager
 
-Version 4 builds upon the Agentic AI architecture introduced in V3 by enhancing the daily productivity experience with an integrated Focus Timer and a redesigned personalization system for motivational quotes.
+Users can now personalize their dashboard by choosing which widgets are visible.
 
----
+Each dashboard component can be independently enabled or disabled, including:
 
-# 📖 Overview
-
-Task Catalyst is built around a simple philosophy:
-
-> **A productivity application should not only help users organize work—it should also help them focus and stay motivated throughout the day.**
-
-Version 4 strengthens this philosophy by introducing distraction-free focus sessions and centralized personalization options without changing the underlying agent architecture.
-
----
-
-# ✨ Core Features
-
-## 🔐 Secure Authentication
-
-* Email & Password authentication
-* Supabase Authentication
-* Automatic profile creation
-* Row-Level Security (RLS)
-* User-specific data isolation
-
----
-
-## 📋 Intelligent Task Management
-
-Manage academic tasks with:
-
-* Title & Description
-* Deadline
-* Importance Rating
-* Estimated Time
-* Category
-* Status Tracking
-* Priority Score
-* Postponement Counter
-
-Operations supported:
-
-* Create
-* Edit
-* Delete
-* Complete
-* Postpone
-* Filter
-* Sort
-
----
-
-## 📊 Intelligent Dashboard
-
-The Dashboard serves as the central productivity workspace.
-
-It provides:
-
-* Personalized greeting
-* Daily motivational quote
-* Productivity statistics
+* Daily Motivation Quote
 * Agent Briefing
-* AI recommendations
-* Top priority tasks
-* Due Today / Due Tomorrow summaries
-* Integrated Focus Timer
-* Quick task completion
+* Focus Timer
+* AI Recommendation
+* Due Today / Tomorrow cards
+
+Dashboard preferences are stored in Supabase, making them persistent across devices instead of relying on browser storage.
 
 ---
 
-# 🤖 Agentic AI System
+### Centralized Dashboard Configuration
 
-Task Catalyst continuously analyzes the user's workload to generate meaningful productivity interventions.
+Introduced a dedicated dashboard configuration architecture through `dashboardPrefs.js`.
 
-The Agent evaluates:
+Instead of scattering widget definitions across multiple files, Version 5 introduces a single source of truth responsible for:
 
-* Pending tasks
-* Overdue work
-* Deadline urgency
-* Priority scores
-* Estimated workload
-* Postponement history
+* default widget visibility
+* widget metadata
+* automatic preference merging
+* future widget expansion
 
-It transforms these observations into structured recommendations that assist users in making better decisions.
+Adding a new dashboard widget now requires only minimal changes while preserving maintainability.
 
 ---
 
-## ⚡ Agent Briefing
+### Stronger Database Design
 
-The Agent Briefing summarizes important productivity observations and recommends concrete actions.
+The database layer received significant improvements.
 
-Possible interventions include:
+Highlights include:
 
-* Overdue task detection
-* Deadline risk analysis
-* Workload balancing
-* Preparation planning
-* Productivity insights
+* safer authentication trigger implementation
+* explicit schema references
+* secure search path configuration
+* dashboard preference persistence
+* additional validation constraints
+* performance indexes for frequently queried columns
 
-Supported actions include:
-
-* Split large tasks
-* Generate preparation tasks
-* Postpone lower-priority work
-
-All AI actions require explicit user confirmation.
+These improvements increase security, consistency, and scalability without changing the existing application workflow.
 
 ---
 
-# ⏱ Focus Timer (New in V4)
+### Smarter Agent Reasoning
 
-Version 4 introduces a built-in **Focus Timer** based on the Pomodoro technique.
+The AI Agent continues to proactively analyze task data, but Version 5 improves the quality of its reasoning.
 
-Features include:
+Enhancements include:
 
-* 25, 45 and 60 minute focus presets
-* Start, Pause and Reset controls
-* Circular progress indicator
-* Compact and expanded layouts
-* Automatic dashboard layout adaptation
-* No external packages or backend dependency
+* accurate deadline interpretation
+* improved urgency detection
+* better intervention prioritization
+* more realistic planning suggestions
+* cleaner recommendation generation
 
-The timer integrates directly into the Dashboard, encouraging focused work sessions without leaving the application.
-
----
-
-# 🌟 Personalized Motivation
-
-The motivation system has been expanded with a dedicated **Quote Preferences** section inside Settings.
-
-Users can configure how motivational quotes are displayed using four modes:
-
-* Mixed
-* AI Only
-* My Quotes Only
-* Pinned Quote
-
-Additional capabilities include:
-
-* Manage personal quote library
-* Switch quote modes instantly
-* View saved quote count
-* Quick access to the Custom Quotes Manager
-
-Changes are synchronized immediately through local storage, allowing the Dashboard to respect user preferences without requiring additional configuration.
+Agent recommendations become more actionable while reducing misleading observations.
 
 ---
 
-# 🧠 AI Coach
+### Improved Agent Briefing Experience
 
-The AI Coach functions as an interactive productivity assistant capable of:
+The Agent Briefing interface has been refined to improve readability and execution.
 
-* Understanding current workload
-* Referring to actual task titles
-* Maintaining recent conversation history
-* Suggesting executable actions
-* Requesting confirmation before execution
+Enhancements include:
 
----
+* clearer visual hierarchy
+* intervention count badges
+* improved execution previews
+* better distinction between warnings, plans, actions and insights
+* more informative split-task previews
+* improved deadline distribution for generated subtasks
 
-# 📈 Intelligent Priority Algorithm
-
-Every task receives a dynamic Priority Score (0–100).
-
-Current weighting:
-
-| Factor           | Weight |
-| ---------------- | ------ |
-| Importance       | 40%    |
-| Deadline Urgency | 40%    |
-| Quick Win Bonus  | 20%    |
-
-The Agent uses this score as one of several inputs while generating productivity recommendations.
+These improvements make AI suggestions easier to understand before execution.
 
 ---
 
-# 🏗 Architecture
+### Focus Timer Improvements
 
-```text
-Tasks
-      │
-      ▼
-Priority Engine
-      │
-      ▼
-Agent Engine
-      │
-      ▼
-Agent Briefing
-      │
-      ▼
-Dashboard
-      │
-      ├── Focus Timer
-      ├── AI Recommendations
-      ├── Quote System
-      └── Productivity Statistics
-```
+The integrated Focus Timer continues to evolve.
 
-Version 4 maintains the modular architecture introduced in Version 3 while improving user interaction and personalization.
+Version 5 improves the overall focus workflow by making sessions easier to notice and integrating more naturally into the Dashboard experience.
 
 ---
 
-# 🛠 Technology Stack
+### Task Management Refinements
 
-### Frontend
+Several usability improvements have been made across task management.
+
+Examples include:
+
+* improved dropdown rendering
+* better task interaction consistency
+* cleaner execution flow
+* refined task splitting behavior
+* improved priority recalculation
+
+---
+
+# Core Features
+
+* Secure user authentication using Supabase Authentication
+* Personal task management with full CRUD functionality
+* AI-generated motivational quotes using Google Gemini
+* Personalized AI productivity coaching
+* Intelligent task prioritization
+* Agent Briefing with proactive interventions
+* Automatic preparation plan generation
+* Smart task splitting
+* Focus Timer
+* Dashboard customization
+* Quote personalization
+* Productivity personality analysis
+* Responsive interface for desktop and mobile devices
+
+---
+
+# Technology Stack
+
+**Frontend**
 
 * React
 * Vite
 * JavaScript
 * CSS
 
-### Backend
+**Backend**
 
 * Supabase
 
-### Database
+**Artificial Intelligence**
 
-* PostgreSQL
+* Google Gemini 2.5 Flash
 
-### Artificial Intelligence
+**Database**
 
-* Google Gemini API (Gemini 2.5 Flash)
+* PostgreSQL (Supabase)
 
 ---
 
-# 📂 Project Structure
+# Project Architecture
 
-```text
-Task_Catalyst/
+```
+Frontend
+     │
+     ▼
+Dashboard
+     │
+     ├── Dashboard Manager
+     ├── Quote Engine
+     ├── Focus Timer
+     ├── Agent Briefing
+     └── AI Recommendation
+              │
+              ▼
+        Agent Engine
+              │
+              ▼
+      Google Gemini API
 
-├── src/
-│   ├── components/
-│   │     ├── AgentBriefing.jsx
-│   │     ├── AddTaskModal.jsx
-│   │     └── CustomQuotesModal.jsx
-│   │
-│   ├── lib/
-│   │     ├── agentEngine.js
-│   │     ├── gemini.js
-│   │     ├── priority.js
-│   │     ├── quotes.js
-│   │     └── supabase.js
-│   │
-│   ├── pages/
-│   │     ├── Dashboard.jsx
-│   │     ├── Tasks.jsx
-│   │     ├── AICoach.jsx
-│   │     ├── Settings.jsx
-│   │     └── Auth.jsx
-│   │
-│   ├── App.jsx
-│   ├── main.jsx
-│   └── index.css
-│
-├── supabase/
-├── package.json
-└── README.md
+                │
+
+         Supabase Backend
+              │
+              ├── Authentication
+              ├── PostgreSQL Database
+              ├── Dashboard Preferences
+              └── User Profiles
 ```
 
 ---
 
-# 🚀 Installation
+# Security
+
+Version 5 introduces several database improvements.
+
+* Row Level Security (RLS)
+* Secure authentication trigger
+* Explicit schema references
+* Protected search path
+* Database validation constraints
+* Safe migration design using IF NOT EXISTS
+* Indexed database queries for improved performance
+
+---
+
+# Current Limitations
+
+Although Version 5 introduces significant architectural improvements, several areas remain intentionally outside the current project scope.
+
+* Google Gemini API requires users to provide their own API key.
+* AI capabilities depend on external API availability and quota limits.
+* Dashboard preferences are synchronized across devices, while quote collections remain stored locally.
+* Offline support is limited. Internet connectivity is required for authentication, database operations, and AI-powered features.
+* Shared quote collections
+* Agent reasoning is recommendation-based and does not automatically modify user tasks without confirmation.
+* The application currently targets individual users rather than collaborative teams.
+* Background reminders and notification services are not yet implemented.
+* AI request handling currently relies on a single API key per user and does not include automatic key rotation or fallback providers.
+
+---
+
+# Future Scope
+
+Several enhancements are possible for future versions.
+
+### Scalability
+
+* Multi-provider AI architecture
+* Automatic API key rotation
+* Shared fallback AI keys for new users
+* Queue-based AI request scheduling
+* Background task processing
+* Horizontal backend scaling
+* AI response caching
+* Better rate-limit management
+
+### Productivity
+
+* Calendar integration
+* Email reminders
+* Push notifications
+* Habit tracking
+* Recurring tasks
+* Time analytics dashboard
+* Weekly productivity reports
+* AI-generated study schedules
+
+### Collaboration
+
+* Shared workspaces
+* Team task management
+* Collaborative projects
+* Group planning
+
+### Intelligence
+
+* Long-term productivity analytics
+* Personalized learning of user behaviour
+* Adaptive scheduling
+* Smarter workload balancing
+* Multi-step autonomous planning
+
+---
+
+# Installation
 
 ```bash
 git clone <repository-url>
+
+cd task-catalyst
 
 npm install
 
 npm run dev
 ```
 
-Configure your Supabase credentials in the environment file before running the application.
+---
+
+# Environment
+
+Configure Supabase credentials inside your environment configuration.
+
+Google Gemini API keys can be added later from the application's Settings page.
 
 ---
 
-# 🔑 Gemini API Setup
+# Version Summary
 
-To enable AI-powered functionality:
+Version 5 represents the transition from feature expansion to architectural refinement.
 
-1. Create a free Gemini API key from Google AI Studio.
-2. Open **Settings**.
-3. Paste your API key.
-4. Save the configuration.
-
-AI-powered coaching, recommendations, and motivational content become available immediately.
-
----
-
-# 🎯 Design Philosophy
-
-Task Catalyst follows three guiding principles:
-
-### Intelligent
-
-Understand the user's workload rather than simply storing tasks.
-
-### Personalized
-
-Allow users to tailor motivation and productivity tools to match their working style.
-
-### User Controlled
-
-AI recommends actions, but every meaningful operation remains under explicit user approval.
-
----
-
-# 📌 Current Limitations
-
-Although Version 4 significantly improves usability and personalization, several features remain outside the current scope.
-
-Current limitations include:
-
-
-* Focus Timer operates independently and is not yet connected to task tracking or productivity analytics.
-* Focus sessions are not persisted between browser refreshes.
-* Offline support is limited. Internet connectivity is required for authentication, database operations, and AI-powered features.
-* Shared quote collections
-* Multi-device quote synchronization
-* Custom quotes remain stored locally and are not synchronized across devices.
-* AI interventions are generated only after meaningful task changes rather than continuous background monitoring.
-* Calendar integration and reminder notifications are not yet available.
-* Recurring task management is currently unsupported.
-* Long-term productivity analytics and historical focus statistics have not yet been implemented.
-* Better automation and more features in settings
-
----
-
-# 📜 Version History
-
-| Version | Highlights                                                                                                                      |
-| ------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| V1      | Core productivity platform with authentication, task management, dashboard, AI coach, and intelligent priority scoring.         |
-| V2      | Personalized motivation system with modular quote engine, custom quotes, and configurable quote modes.                          |
-| V3      | Agentic AI reasoning engine, Agent Briefing, executable AI actions, and proactive productivity interventions.                   |
-| **V4**  | Integrated Focus Timer, redesigned Quote Preferences, improved dashboard intelligence, and enhanced personalization experience. |
-
----
-
-# 👨‍💻 Author
-
-**Shivam Agrawal**
-
-Malaviya National Institute of Technology (MNIT), Jaipur
-
-Electrical Engineering • Full Stack Development • Artificial Intelligence
-
----
-
-## ⭐ If you found this project interesting, consider giving it a star.
+Rather than introducing a single large capability, this release focuses on making Task Catalyst more reliable, customizable, secure, and easier to extend. Dashboard personalization, stronger database design, improved agent reasoning, and maintainable configuration architecture establish a solid foundation for future scalability while preserving the intelligent productivity experience introduced in previous versions.
