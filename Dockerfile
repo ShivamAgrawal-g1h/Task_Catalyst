@@ -9,10 +9,6 @@ RUN npm install
 
 COPY . .
 
-# Build-time variables for Vite
-ARG VITE_SUPABASE_URL
-ARG VITE_SUPABASE_ANON_KEY
-
 RUN npm run build
 
 # ---------- Runtime ----------
